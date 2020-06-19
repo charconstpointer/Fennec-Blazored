@@ -22,7 +22,7 @@ namespace Fennec.Client.Store.LoginUseCase
         {
             var response = await _client.PostAsJsonAsync("/users", action.LoginRequest);
             var credentials = await response.Content.ReadFromJsonAsync<LoginDto>();
-            dispatcher.Dispatch(new LoginResultAction(credentials.Token));
+            dispatcher.Dispatch(new LoginResultAction(credentials.Token, credentials.Username));
         }
     }
 }

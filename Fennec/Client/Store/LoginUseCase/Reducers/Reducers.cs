@@ -6,6 +6,6 @@ namespace Fennec.Client.Store.LoginUseCase.Reducers
     {
         [ReducerMethod]
         public static LoginState ReduceGetArticlesResultAction(LoginState state, LoginResultAction action)
-            => new LoginState("", action.Token, true);
+            => new LoginState(action.Username, action.Token, true);
     }
 }
