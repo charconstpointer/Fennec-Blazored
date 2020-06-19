@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Fennec.Server.Queries;
 using MediatR;
@@ -17,10 +18,17 @@ namespace Fennec.Server.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("advertiserId:guid/advertisements")]
+        [HttpGet("{advertiserId:guid}/advertisements")]
         public async Task<IActionResult> GetAdvertisements(Guid advertiserId)
         {
             return Ok(await _mediator.Send(new GetAdvertisements {AdvertiserId = advertiserId}));
+        }
+
+        [HttpGet("{advertiserId:guid}/advertisements/{advertisementId:guid}")]
+        public async Task<IActionResult> GetAdvertisements(Guid advertiserId, Guid advertisementId)
+        {
+            var ads = await _mediator.Send(new GetAdvertisements {AdvertiserId = advertiserId});
+            return Ok(ads.FirstOrDefault());
         }
 
         [HttpGet]

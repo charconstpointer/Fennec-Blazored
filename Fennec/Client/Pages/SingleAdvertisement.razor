@@ -1,0 +1,47 @@
+﻿@page "/{AdvertiserId:guid}/advertisements/{advertisementId:guid}"
+@using Fennec.Contracts
+@inject HttpClient Http
+@if (_advertisement is null)
+{
+    <h3>
+        Fetching...
+    </h3>
+}
+else
+{
+    <EditForm Model="@_advertisement" OnValidSubmit="OnSubmit">
+        <div class="form-group">
+            <p>🖋 Name</p>
+            <InputText class="form-control" id="title" @bind-Value="@_advertisement.Name"></InputText>
+        </div>
+        <div class="form-group">
+            <p>💵 Price per view</p>
+            <InputNumber class="form-control" type="password" @bind-Value="@_advertisement.PricePerSecond" id="desc"></InputNumber>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Save</button>
+        }
+    </EditForm>
+}
+@code {
+
+    [Parameter]
+    public Guid AdvertisementId { get; set; }
+
+    [Parameter]
+    public Guid AdvertiserId { get; set; }
+
+    private AdvertisementDto _advertisement;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var advertisement = await Http.GetFromJsonAsync<AdvertisementDto>($"/advertisers/{AdvertiserId}/advertisements/{AdvertisementId}");
+        _advertisement = advertisement;
+    }
+
+    public void OnSubmit()
+    {
+
+    }
+
+}

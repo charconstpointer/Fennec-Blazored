@@ -1,4 +1,6 @@
-﻿namespace Fennec.Client.Store.LoginUseCase
+﻿using System;
+
+namespace Fennec.Client.Store.LoginUseCase
 {
     public class LoginState
     {

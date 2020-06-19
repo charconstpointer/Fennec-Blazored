@@ -1,8 +1,10 @@
 ﻿@page "/advertisements"
 @using Fluxor
 @using Fennec.Client.Store.GetAdvertisements
+@using Fennec.Client.Store.LoginUseCase
 @using Fennec.Contracts
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 @if (_ads is null)
 {
     <h3>
@@ -27,7 +29,8 @@ else
         <tbody>
         @foreach (var ad in _ads)
         {
-            <tr >
+            var a = ad;
+            <tr @onclick="() => ViewSingleAdvertisement(ad)" >
                 <td>
                     @ad.Name
                 </td>
@@ -39,12 +42,19 @@ else
 }
 
 @code {
+    [Inject]
+    public IState<LoginState> LoginState { get; set; }
     private IEnumerable<AdvertisementDto> _ads;
 
     protected override async Task OnInitializedAsync()
     {
         var response = await Http.GetFromJsonAsync<IEnumerable<AdvertisementDto>>("/advertisers");
         _ads = response;
+    }
+
+    public void ViewSingleAdvertisement(AdvertisementDto advertisement)
+    {
+        NavigationManager.NavigateTo($"{Guid.NewGuid()}/advertisements/{advertisement.Id}");
     }
 
 }
