@@ -1,4 +1,6 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@using Fluxor
+@using Fennec.Client.Store.LoginUseCase
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Fennec</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -37,10 +39,21 @@
                 <span class="oi oi-account-login" aria-hidden="true"></span> Register / Login
             </NavLink>
         </li>
+        
+        @if (LoginState.Value.Logged)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="advertisements">
+                    <span class="oi oi-account-login" aria-hidden="true"></span> Advertisements
+                </NavLink>
+            </li>
+        }
     </ul>
 </div>
 
 @code {
+    [Inject]
+    public IState<LoginState> LoginState { get; set; }
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;

@@ -19,7 +19,7 @@ namespace Fennec.Server.Handlers
 
         public Task<Unit> Handle(CreateArticle request, CancellationToken cancellationToken)
         {
-            var article = Article.Create(Guid.NewGuid(), request.Title, request.Description, request.Tags);
+            var article = Article.Create(Guid.NewGuid(), request.Title, request.Body, request.Description, request.Tags);
             _articles.Add(article);
             return Unit.Task;
         }

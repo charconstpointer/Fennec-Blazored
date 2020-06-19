@@ -22,7 +22,11 @@ namespace Fennec.Server.Handlers
         {
             return _articles.Select(a => new ArticleDto
             {   
-                Title = a.Title, Description = a.Description, Id = a.Id, Tags = a.Tags
+                Title = a.Title, 
+                Description = a.Description, 
+                Id = a.Id, 
+                Body = a.Body,
+                Tags = a.Tags, 
             });
         }
     }

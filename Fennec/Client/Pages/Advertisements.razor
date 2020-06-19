@@ -1,0 +1,50 @@
+﻿@page "/advertisements"
+@using Fluxor
+@using Fennec.Client.Store.GetAdvertisements
+@using Fennec.Contracts
+@inject HttpClient Http
+@if (_ads is null)
+{
+    <h3>
+        Fetching...
+    </h3>
+}
+else if (!_ads.Any())
+{
+    <h3>
+        No advertisements found.
+    </h3>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var ad in _ads)
+        {
+            <tr >
+                <td>
+                    @ad.Name
+                </td>
+                <td>@ad.PricePerSecond</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<AdvertisementDto> _ads;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await Http.GetFromJsonAsync<IEnumerable<AdvertisementDto>>("/advertisers");
+        _ads = response;
+    }
+
+}

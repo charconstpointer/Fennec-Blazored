@@ -1,7 +1,36 @@
 ﻿@page "/articles/{articleId:guid}"
-<h3>@ArticleId</h3>
+@using Fluxor
+@using Fennec.Client.Store.GetArticlesUseCase
+@using Fennec.Contracts
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>
+                @_article.Title
+            </h3>
+            <dl>
+                @_article.Description
+            </dl>
+            <p>
+               @_article.Body
+            </p>
+        </div>
+    </div>
+</div>
 
 @code {
     [Parameter]
     public Guid ArticleId { get; set; }
+
+    [Inject]
+    public IState<ArticlesState> Articles { get; set; }
+
+    private ArticleDto _article;
+
+    protected override Task OnInitializedAsync()
+    {
+        _article = Articles.Value.Articles.FirstOrDefault(a => a.Id == ArticleId);
+        return Task.CompletedTask;
+    }
+
 }
