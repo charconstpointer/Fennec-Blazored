@@ -1,0 +1,7 @@
+﻿@page "/articles/{articleId:guid}"
+<h3>@ArticleId</h3>
+
+@code {
+    [Parameter]
+    public Guid ArticleId { get; set; }
+}

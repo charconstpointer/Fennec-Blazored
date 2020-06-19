@@ -1,0 +1,15 @@
+﻿@inject NavigationManager NavigationManager
+<div class="alert alert-secondary mt-4" role="alert">
+    <span class="oi oi-pencil mr-2" aria-hidden="true"></span>
+    <span class="text-nowrap">
+        Please 
+        <a target="_blank" class="font-weight-bold" onclick="() => NavigationManager.NavigateTo('/login')">login in</a>, or
+        <a target="_blank" class="font-weight-bold" onclick="() => NavigationManager.NavigateTo('/createAccount')">create new account</a>
+    </span>
+</div>
+
+@code {
+    // Demonstrates how a parent component can supply parameters
+    [Parameter]
+    public string Title { get; set; }
+}

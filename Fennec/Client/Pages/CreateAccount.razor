@@ -1,0 +1,56 @@
+﻿@inject HttpClient Http
+@page "/create-account"
+@using Fennec.Contracts
+@using Fluxor
+@using Fennec.Client.Store.LoginUseCase
+@using Fennec.Client.Models
+<EditForm Model="@_loginRequest" OnValidSubmit="OnSubmit">
+    @if (Sent)
+    {
+        <div class="alert alert-success" role="alert">
+            Account successfully created 🎈
+            @LoginState.Value.Token;
+        </div>
+    }
+
+    <!-- Button trigger modal -->
+
+
+    <div class="form-group">
+        <p>👩‍🚀 Username</p>
+        <InputText class="form-control" id="title" @bind-Value="@_loginRequest.Username"></InputText>
+    </div>
+    <div class="form-group">
+        <p>🔑 Password</p>
+        <InputText class="form-control" type="password" id="desc" @bind-Value="@_loginRequest.Password"></InputText>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Create account</button>
+
+
+</EditForm>
+
+@code {
+
+    [Inject]
+    public IDispatcher Dispatcher { get; set; }
+
+    [Inject]
+    public IState<LoginState> LoginState { get; set; }
+
+    private LoginRequest _loginRequest = new LoginRequest();
+    private bool Sent { get; set; }
+
+    
+
+    public async Task OnSubmit()
+    {
+        Dispatcher.Dispatch(new LoginAction(_loginRequest));
+    // var res = await Http.PostAsJsonAsync("/users", _loginRequest);
+        if (!string.IsNullOrEmpty(LoginState.Value.Token))
+        {
+            Sent = true;
+        }
+    }
+
+}

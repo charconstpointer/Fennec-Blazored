@@ -1,0 +1,64 @@
+﻿@page "/articles"
+@using Fennec.Contracts
+@using Fluxor
+@using Fennec.Client.Store.GetArticlesUseCase
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@if (ArticlesState.Value.Articles is null)
+{
+    <h3>
+        Fetching...
+    </h3>
+}
+else if (!ArticlesState.Value.Articles.Any())
+{
+    <h3>
+        No articles found.
+    </h3>
+}
+else
+{
+    <h3>@ArticlesState.Value.Articles.Count</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var article in ArticlesState.Value.Articles)
+        {
+            var a = article;
+            <tr @onclick="(e) =>  NavigateToArticle(a.Id)" >
+                <td>
+                    @article.Title
+                </td>
+                <td>@article.Description</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    [Inject]
+    private IState<ArticlesState> ArticlesState { get; set; }
+
+    [Inject]
+    public IDispatcher Dispatcher { get; set; }
+    // private IEnumerable<ArticleDto> _articles;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Dispatcher.Dispatch(new GetArticlesAction());
+        // _articles = await Http.GetFromJsonAsync<IEnumerable<ArticleDto>>("/articles");
+    }
+
+    public void NavigateToArticle(Guid articleId)
+    {
+        NavigationManager.NavigateTo($"/articles/{articleId}");
+    }
+
+}

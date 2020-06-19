@@ -1,0 +1,29 @@
+﻿@using Fluxor
+@using Fennec.Client.Store.LoginUseCase
+@inherits LayoutComponentBase
+<div class="sidebar">
+    <NavMenu />
+</div>
+
+<div class="main">
+    <div class="top-row px-4">
+        @if (LoginState.Value.Logged)
+        {
+            <a href="http://blazor.net" target="_blank" class="ml-md-auto">Hello, @LoginState.Value.Username</a>
+        }
+        else
+        {
+            <a href="http://blazor.net" target="_blank" class="ml-md-auto">Hello, Guest</a>
+        }
+    </div>
+
+    <div class="content px-4">
+        @Body
+    </div>
+</div>
+
+@code
+{
+    [Inject]
+    public IState<LoginState> LoginState { get; set; }
+}
