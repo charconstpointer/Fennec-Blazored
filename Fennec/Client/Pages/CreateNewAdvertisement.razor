@@ -1,0 +1,42 @@
+﻿@page "/advertiser/{advertiserId}/create-new-ad"
+@using Fennec.Client.Models
+@inject HttpClient Http
+@if (Sent)
+{
+    <div class="alert alert-success" role="alert">
+        Advertisement successfully created 🎈
+    </div>
+}
+
+<!-- Button trigger modal -->
+
+<EditForm Model="@_createNewAdvertisementRequest" OnValidSubmit="OnSubmit">
+    <div class="form-group">
+        <p>👩‍🚀 Advertisement name</p>
+        <InputText class="form-control" id="title" @bind-Value="@_createNewAdvertisementRequest.Name"></InputText>
+    </div>
+    <div class="form-group">
+        <p>💰 Price per view</p>
+        <InputNumber class="form-control" type="password" id="desc" @bind-Value="@_createNewAdvertisementRequest.PricePerView"></InputNumber>
+    </div>
+    <div class="form-group">
+        <p>🖼 Advertisement image link</p>
+        <InputText class="form-control" id="title" @bind-Value="@_createNewAdvertisementRequest.Path"></InputText>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Create advertisement</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public Guid AdvertiserId { get; set; }
+
+    public bool Sent { get; set; }
+    private CreateNewAdvertisementRequest _createNewAdvertisementRequest = new CreateNewAdvertisementRequest();
+
+    public async Task OnSubmit()
+    {
+        await Http.PostAsJsonAsync($"/advertisers/{AdvertiserId}/advertisements", _createNewAdvertisementRequest);
+    }
+
+}

@@ -6,7 +6,8 @@ namespace Fennec.Contracts
     {
         public Guid Id { get; set; }
         public string Name { get;  set; }
+        public string Path { get; set; }
         public DateTime DateOfCreation { get;  set; }
-        public float PricePerSecond { get;  set; }
+        public float PricePerView { get;  set; }
     }
 }

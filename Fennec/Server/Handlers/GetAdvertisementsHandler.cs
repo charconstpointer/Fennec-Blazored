@@ -26,7 +26,7 @@ namespace Fennec.Server.Handlers
                 DateOfCreation = x.DateOfCreation,
                 Id = x.Id,
                 Name = x.Name,
-                PricePerSecond = x.PricePerSecond
+                PricePerView = x.PricePerSecond
             });
             return ads;
         }

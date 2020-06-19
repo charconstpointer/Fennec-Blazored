@@ -21,24 +21,27 @@ else
 {
     <table class="table">
         <thead>
-        <tr>
-            <th>Name</th>
-            <th>Price</th>
-        </tr>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var ad in _ads)
-        {
-            var a = ad;
-            <tr @onclick="() => ViewSingleAdvertisement(ad)" >
-                <td>
-                    @ad.Name
-                </td>
-                <td>@ad.PricePerSecond</td>
-            </tr>
-        }
+            @foreach (var ad in _ads)
+            {
+                var a = ad;
+                <tr @onclick="() => ViewSingleAdvertisement(ad)">
+                    <td>
+                        @ad.Name
+                    </td>
+                    <td>@ad.PricePerView</td>
+                </tr>
+            }
         </tbody>
+
+
     </table>
+    <button @onclick="CreateNewAdvertisement" type="button" class="btn btn-primary btn-lg btn-block">Create new advertisement</button>
 }
 
 @code {
@@ -57,4 +60,9 @@ else
         NavigationManager.NavigateTo($"{Guid.NewGuid()}/advertisements/{advertisement.Id}");
     }
 
+
+    public void CreateNewAdvertisement()
+    {
+        NavigationManager.NavigateTo("/create-new-ad");
+    }
 }

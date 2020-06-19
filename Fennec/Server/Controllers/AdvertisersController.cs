@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Fennec.Server.Commands;
 using Fennec.Server.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +10,7 @@ namespace Fennec.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AdvertisersController :ControllerBase
+    public class AdvertisersController : ControllerBase
     {
         private readonly IMediator _mediator;
 
@@ -34,7 +35,13 @@ namespace Fennec.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAdvertisementss()
         {
-            return Ok(await _mediator.Send(new GetAdvertisements { AdvertiserId = Guid.NewGuid() }));
+            return Ok(await _mediator.Send(new GetAdvertisements {AdvertiserId = Guid.NewGuid()}));
+        }
+
+        [HttpPost("{advertiserId:guid}/advertisements")]
+        public async Task<IActionResult> CraeteAdvertisement(CreateAdvertisement createAdvertisement)
+        {
+            return Ok();
         }
     }
 }
