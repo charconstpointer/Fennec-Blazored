@@ -30,8 +30,7 @@ else
         <tbody>
         @foreach (var article in ArticlesState.Value.Articles)
         {
-            var a = article;
-            <tr @onclick="(e) =>  NavigateToArticle(a.Id)" >
+            <tr @onclick="(e) =>  NavigateToArticle(article.Id)" >
                 <td>
                     @article.Title
                 </td>
