@@ -29,8 +29,7 @@ else
         <tbody>
             @foreach (var ad in _ads)
             {
-                var a = ad;
-                <tr @onclick="() => ViewSingleAdvertisement(ad)">
+                <tr @onclick="(e) => ViewSingleAdvertisement(ad.Id)">
                     <td>
                         @ad.Name
                     </td>
@@ -55,14 +54,14 @@ else
         _ads = response;
     }
 
-    public void ViewSingleAdvertisement(AdvertisementDto advertisement)
+    public void ViewSingleAdvertisement(Guid adId)
     {
-        NavigationManager.NavigateTo($"{Guid.NewGuid()}/advertisements/{advertisement.Id}");
+        NavigationManager.NavigateTo($"{Guid.NewGuid()}/advertisements/{adId}");
     }
 
 
     public void CreateNewAdvertisement()
     {
-        NavigationManager.NavigateTo("/create-new-ad");
+        NavigationManager.NavigateTo($"/advertiser/{Guid.NewGuid()}/create-new-ad");
     }
 }

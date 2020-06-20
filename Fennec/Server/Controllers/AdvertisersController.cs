@@ -32,8 +32,8 @@ namespace Fennec.Server.Controllers
             return Ok(ads.FirstOrDefault());
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAdvertisementss()
+        [HttpGet("advertisements")]
+        public async Task<IActionResult> GetAdvertisements()
         {
             return Ok(await _mediator.Send(new GetAdvertisements {AdvertiserId = Guid.NewGuid()}));
         }
@@ -41,7 +41,7 @@ namespace Fennec.Server.Controllers
         [HttpPost("{advertiserId:guid}/advertisements")]
         public async Task<IActionResult> CraeteAdvertisement(CreateAdvertisement createAdvertisement)
         {
-            return Ok();
+            return Created("", await _mediator.Send(createAdvertisement));
         }
     }
 }

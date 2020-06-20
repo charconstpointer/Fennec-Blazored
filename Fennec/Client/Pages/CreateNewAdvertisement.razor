@@ -1,4 +1,4 @@
-﻿@page "/advertiser/{advertiserId}/create-new-ad"
+﻿@page "/advertiser/{advertiserId:guid}/create-new-ad"
 @using Fennec.Client.Models
 @inject HttpClient Http
 @if (Sent)
@@ -28,6 +28,7 @@
 </EditForm>
 
 @code {
+
     [Parameter]
     public Guid AdvertiserId { get; set; }
 
@@ -36,7 +37,8 @@
 
     public async Task OnSubmit()
     {
-        await Http.PostAsJsonAsync($"/advertisers/{AdvertiserId}/advertisements", _createNewAdvertisementRequest);
+        var res = await Http.PostAsJsonAsync($"/advertisers/{AdvertiserId}/advertisements", _createNewAdvertisementRequest);
+        Sent = res.IsSuccessStatusCode;
     }
 
 }
