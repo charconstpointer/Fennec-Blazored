@@ -17,5 +17,9 @@
     <ProjectReference Include="..\Client\Fennec.Client.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\Interfaces" />
+  </ItemGroup>
+
 
 </Project>
